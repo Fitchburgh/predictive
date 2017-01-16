@@ -30,25 +30,33 @@ class Company < ActiveRecord::Base
   end
 
   def parse_search_results
-    @data['results']['companies'].each do |l|
-      @name = [l][0]['company']['name']
-      @company_number = [l][0]['company']['company_number']
-      @company_type = [l][0]['company']['company_type']
-      @incorporation_date = [l][0]['company']['incorporation_date']
-      @registered_address_in_full = [l][0]['company']['registered_address_in_full']
-      @current_status = [l][0]['company']['current_status']
-      @jurisdiction_code = [l][0]['company']['jurisdiction_code']
-
-      Company.create!(
-        name: @name,
-        company_number: @company_number,
-        company_type: @company_type,
-        incorporation_date: @incorporation_date,
-        registered_address_in_full: @registered_address_in_full,
-        current_status: @current_status,
-        jurisdiction_code: @jurisdiction_code
-      )
+    a = 0
+    
+    until @data['results']['companies'][a].nil?
+      binding.pry
+      @name = @data['results']['companies'][a]['company']['name']
+      @company_number = @data['results']['companies'][a]['company']['company_number']
+      @company_type = @data['results']['companies'][a]['company']['company_type']
+      @incorporation_date = @data['results']['companies'][a]['company']['incorporation_date']
+      @registered_address_in_full = @data['results']['companies'][a]['company']['registered_address_in_full']
+      @current_status = @data['results']['companies'][a]['company']['current_status']
+      @jurisdiction_code = @data['results']['companies'][a]['company']['jurisdiction_code']
+      register_company
+      a += 1
     end
+
+  end
+
+  def register_company
+    @company = Company.create!(
+      name: @name,
+      company_number: @company_number,
+      company_type: @company_type,
+      incorporation_date: @incorporation_date,
+      registered_address_in_full: @registered_address_in_full,
+      current_status: @current_status,
+      jurisdiction_code: @jurisdiction_code
+    )
   end
 
   def get_json(url)
