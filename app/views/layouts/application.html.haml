@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %link{:href => "https://fonts.googleapis.com/css?family=Open+Sans", :rel => "stylesheet"}/
+    %title Predictive Ops
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    .container
+    - if current_user
+      %ul.user-prompts
+        %p= link_to "#{current_user.username}", 'profile'
+        %p= link_to "Game", 'game'
+        %p= link_to "Leaderboard", 'leaderboard'
+        %p= link_to "Log Out", login_path, method: "delete"
+    - else
+      %ul.user-prompts
+    .container
+      = yield

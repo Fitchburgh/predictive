@@ -1,0 +1,21 @@
+.container.container-all
+  %h1.first-header Search through over 110,000,000 companies:
+  .container.container-search
+    = form_for :company, url: {action: "return"} do |f|
+      = f.text_field :company, :placeholder => "Company name"
+      = f.submit "Enter"
+  .container.container-answer
+    - if @companies.nil?
+      %h2 No company matches this search result.  Try again.
+    -else
+      %ul.companies
+        - @companies.each do |company|
+          %li.entry
+            %i.business-entry
+            %h2 #{company.name}
+            %h3 Company Number: #{company.company_number}
+            %h3 Company Type: #{company.company_type}
+            %h3 Incorporation Date: #{company.incorporation_date}
+            %h3 Registered Address: #{company.registered_address_in_full}
+            %h3 Current Status: #{company.current_status}
+            %h3 Jurisdiction Code: #{company.jurisdiction_code}

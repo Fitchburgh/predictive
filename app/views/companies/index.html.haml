@@ -1,0 +1,6 @@
+.container.container-all
+  %h1.first-header Search through over 110,000,000 companies:
+  .container.container-search
+    = form_for :company, url: {action: "return"} do |f|
+      = f.text_field :company, :placeholder => "Company name"
+      = f.submit "Enter"
